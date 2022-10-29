@@ -1,0 +1,23 @@
+{
+  "name": "primer-entrega-proy-final",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sweetalert2/theme-dark": "^5.0.12",
+    "@sweetalert2/themes": "^5.0.12",
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.6",
+    "handlebars": "^4.7.7",
+    "socket.io": "^4.5.3",
+    "sweetalert2": "^11.6.4"
+  }
+}

@@ -1,0 +1,83 @@
+[
+  {
+    "nombre": "n",
+    "descripcion": "producto1",
+    "codigo": "12",
+    "foto": "https://www.google.com/search?q=productos&client=opera&hs=O9z&sxsrf=ALiCzsbWwj-mdSs30FIaiQX0foX28zIbLg:1667009917389&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjy5dnvr4T7AhWukZUCHU03Ch4Q_AUoAXoECAIQAw&biw=1880&bih=939&dpr=1",
+    "precio": "1234",
+    "stock": "1241",
+    "id": 12
+  },
+  {
+    "nombre": "Nestor Ariel Frias",
+    "descripcion": "producto1",
+    "codigo": "1234",
+    "foto": "https://www.google.com/search?q=productos&client=opera&hs=O9z&sxsrf=ALiCzsbWwj-mdSs30FIaiQX0foX28zIbLg:1667009917389&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjy5dnvr4T7AhWukZUCHU03Ch4Q_AUoAXoECAIQAw&biw=1880&bih=939&dpr=1",
+    "precio": "1234",
+    "stock": "41242",
+    "id": 13
+  },
+  {
+    "nombre": "n",
+    "descripcion": "producto1",
+    "codigo": "1234",
+    "foto": "https://www.google.com/search?q=productos&client=opera&hs=O9z&sxsrf=ALiCzsbWwj-mdSs30FIaiQX0foX28zIbLg:1667009917389&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjy5dnvr4T7AhWukZUCHU03Ch4Q_AUoAXoECAIQAw&biw=1880&bih=939&dpr=1",
+    "precio": "1234",
+    "stock": "2141",
+    "id": 14
+  },
+  {
+    "nombre": "n",
+    "descripcion": "producto1",
+    "codigo": "1234",
+    "foto": "https://www.google.com/search?q=productos&client=opera&hs=O9z&sxsrf=ALiCzsbWwj-mdSs30FIaiQX0foX28zIbLg:1667009917389&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjy5dnvr4T7AhWukZUCHU03Ch4Q_AUoAXoECAIQAw&biw=1880&bih=939&dpr=1",
+    "precio": "1234",
+    "stock": "1234",
+    "id": 15
+  },
+  {
+    "nombre": "Nestor Ariel Frias",
+    "descripcion": "producto1",
+    "codigo": "1234",
+    "foto": "https://www.google.com/search?q=productos&client=opera&hs=O9z&sxsrf=ALiCzsbWwj-mdSs30FIaiQX0foX28zIbLg:1667009917389&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjy5dnvr4T7AhWukZUCHU03Ch4Q_AUoAXoECAIQAw&biw=1880&bih=939&dpr=1",
+    "precio": "1241",
+    "stock": "23523",
+    "id": 17
+  },
+  {
+    "nombre": "Nestor Ariel Frias",
+    "descripcion": "producto1",
+    "codigo": "1234",
+    "foto": "https://www.google.com/search?q=productos&client=opera&hs=O9z&sxsrf=ALiCzsbWwj-mdSs30FIaiQX0foX28zIbLg:1667009917389&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjy5dnvr4T7AhWukZUCHU03Ch4Q_AUoAXoECAIQAw&biw=1880&bih=939&dpr=1",
+    "precio": "1234",
+    "stock": "1241",
+    "id": 22
+  },
+  {
+    "nombre": "Nestor Ariel Frias",
+    "descripcion": "producto1",
+    "codigo": "1234",
+    "foto": "https://www.google.com/search?q=productos&client=opera&hs=O9z&sxsrf=ALiCzsbWwj-mdSs30FIaiQX0foX28zIbLg:1667009917389&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjy5dnvr4T7AhWukZUCHU03Ch4Q_AUoAXoECAIQAw&biw=1880&bih=939&dpr=1",
+    "precio": "1234",
+    "stock": "1241241",
+    "id": 23
+  },
+  {
+    "nombre": "Nestor Ariel Frias",
+    "descripcion": "producto1",
+    "codigo": "1234",
+    "foto": "https://www.google.com/search?q=productos&client=opera&hs=O9z&sxsrf=ALiCzsbWwj-mdSs30FIaiQX0foX28zIbLg:1667009917389&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjy5dnvr4T7AhWukZUCHU03Ch4Q_AUoAXoECAIQAw&biw=1880&bih=939&dpr=1",
+    "precio": "1234",
+    "stock": "24141",
+    "id": 24
+  },
+  {
+    "nombre": "n",
+    "descripcion": "producto1",
+    "codigo": "1234",
+    "foto": "https://www.google.com/search?q=productos&client=opera&hs=O9z&sxsrf=ALiCzsbWwj-mdSs30FIaiQX0foX28zIbLg:1667009917389&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjy5dnvr4T7AhWukZUCHU03Ch4Q_AUoAXoECAIQAw&biw=1880&bih=939&dpr=1",
+    "precio": "1234",
+    "stock": "12412",
+    "id": 25
+  }
+]

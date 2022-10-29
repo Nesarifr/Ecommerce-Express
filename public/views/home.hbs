@@ -1,0 +1,22 @@
+<header class="container">
+    <nav>
+        <h1>Registro de productos</h1>
+        <div>
+            <a href="./productos" class="administrador"><button>Administrador</button></a>
+            <a href="./productos"><button>Cliente</button></a>
+            {{!-- <a href="./productos" class="nuevoCarrito"><button>Nuevo Carrito</button></a> --}}
+            <a href="./views/carrito.html" class="carrito"><button>Carrito</button></a>
+        </div>
+    </nav>
+</header>
+<div class="contenedor-varios">
+        {{#if productos.error}}
+            {{> error}}
+        {{else}}
+            {{> productos}}
+        {{/if}}
+</div>
+
+
+
+
