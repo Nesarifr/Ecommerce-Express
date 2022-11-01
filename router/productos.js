@@ -13,6 +13,7 @@ routerProducts.use(Express.urlencoded({extended: true}))
 
 routerProducts.get('/', async (req, res)=> {
     try{
+        console.log(`Se hizo ruta get / para usuario y administrador`);
         const productos = await newProduct.getAll()
         if ( productos){
             res.render('home', {productos} )
@@ -42,7 +43,8 @@ routerProducts.get('/:id', async (req, res, next)=>{
 /* -------------------- (disponible para administradores) ------------------- */
 
 const esAdmin = (req, res, next) =>{
-    if(req.headers.authorization != "true"){
+    console.log(req.headers.authorization);
+    if(req.headers.authorization !== "true"){
         res.json({ error : '-1', descripcion: `ruta ${req.headers.referer} método ${req.method} no autorizada`})
     }    
     else{next()}
@@ -50,6 +52,7 @@ const esAdmin = (req, res, next) =>{
 
 routerProducts.post('/', esAdmin, async (req, res)=> {
     try{
+        console.log("Se crea nuevo producto con POST / con verificacion de administrador");
         const loadProduct = req.body
         const nuevoId = await newProduct.save(loadProduct)
         res.json({
@@ -68,6 +71,7 @@ routerProducts.post('/', esAdmin, async (req, res)=> {
 
 routerProducts.put('/:id', esAdmin, async (req, res)=>{
     try{
+        console.log("se modifica el producto con PUT /:id con verificacion de  Admin");
         const {id} = req.params
         const upDate = req.body
         const actualizacion = await newProduct.actualizaByID(parseInt(id), upDate)
@@ -86,6 +90,7 @@ routerProducts.put('/:id', esAdmin, async (req, res)=>{
 
 routerProducts.delete('/:id', esAdmin, async (req, res)=>{
     try{
+        console.log("se realiza un DELETE /:id con verificacion de admin");
         const {id} = req.params
         const productoID=await newProduct.getById(id)
         if(productoID){ //getById devuelve null en caso de que no exita el elemento con ID

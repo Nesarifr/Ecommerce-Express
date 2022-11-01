@@ -4,6 +4,12 @@ class Carrito{
     constructor(nombreArchivo){
         this.nombreArchivo = nombreArchivo;
         this.url=`./src/module/${this.nombreArchivo}` 
+        this.getnombreArchivo = function () {
+            return this.nombreArchivo
+        }
+        this.getUrl = function () {
+            return this.url
+        }
     }
     
     // save(Object): Number - Recibe un producto, lo guarda en el archivo, devuelve el id asignado.
@@ -13,14 +19,18 @@ class Carrito{
                 const listCarrito = await fs.promises.readFile(this.url,"utf-8")
                 if(listCarrito){ //si hay contendio en el archivo
                     const arrayCarrito = JSON.parse(listCarrito)
-                    const ultimoID=arrayCarrito.reduce((acc,item)=> item.id> acc ? acc=item.id : acc, 0)
-                    const newListCarrito={ ...newCarrito, id:ultimoID+1}
+                    const ultimoID=arrayCarrito.reduce(function (acc, item) {
+                        if(acc<item.id){
+                            return acc=item.id
+                        } else { return acc}
+                    }, 0)
+                    const newListCarrito= {id:ultimoID+1, timestamp:new Date().toLocaleString(), ...newCarrito}
                     arrayCarrito.push(newListCarrito)
                     await fs.promises.writeFile(this.url, JSON.stringify(arrayCarrito, null, 2))
-                    return newListCarrito.id  //retorno el ID solicitado
+                    return newListCarrito.id //retorno el ID solicitado}
                 }else{// no hay contenido
                     const newListCarrito={ ...newCarrito, id:1}
-                    await fs.promises.writeFile(this.url, JSON.stringify(newListCarrito, null, 2))
+                    await fs.promises.writeFile(this.url, JSON.stringify([newListCarrito], null, 2))
                     return newListCarrito.id  //retorno el ID solicitado
                 }
             }else{ //no existe el archivo , por lo tanto es el primer elemento
@@ -110,7 +120,22 @@ class Carrito{
             console.log(error)
         }
     }
+
+    async saveAllCarritos(ArrayCarritos){ 
+        try{
+            if(fs.existsSync(this.url)){ //si es que existe el archivo ====>>>
+                    await this.deleteAll()
+                    await fs.promises.writeFile(this.url, JSON.stringify(ArrayCarritos, null, 2))
+                    return null
+            }
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
 }
+
+
 
 /* --------------------------------- exports -------------------------------- */
 export {Carrito}

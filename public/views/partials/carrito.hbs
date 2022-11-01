@@ -1,6 +1,20 @@
 
 <h1>Carrito de compras</h1>
-    
+<div class="lista-productos">
+            {{#each productos}}
+            <div class="card-productos">
+                <div class="imagen">
+                    <img src="{{this.foto}}" alt="">
+                </div>
+                <h2>{{this.nombre}}</h2>
+                <p> <small id="idProducto">{{this.id}}</small> <small>codigo: {{this.codigo}}</small></p>
+                <p>{{this.descripcion}}</p>
+                <div class="comprar">
+                    <p>Stock: {{this.stock}}</p>
+                    <p>$ {{this.precio}}</p>
+                    <a href="/carrito" class= "eliminar-carrito"><button>Eliminar carrito</button></a>
+                </div>
+            </div>
+            {{/each}}
 
-
-
+</div>

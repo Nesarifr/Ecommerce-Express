@@ -6,6 +6,7 @@ const contenedorPrincipal = document.querySelector('.contenedor-varios')
 const administradores = document.querySelector('.administrador')
 const carrito = document.querySelector('.carrito')
 const compraProducto= document.querySelectorAll('.compra-producto')
+
 let nuevoCarrito 
 
 administradores.addEventListener('click', (e)=>{
@@ -27,36 +28,39 @@ administradores.addEventListener('click', (e)=>{
     });
 })
 
-carrito.addEventListener('click', (e)=>{
+carrito.addEventListener('click', async (e)=>{
     e.preventDefault()
-    fetch('../views/partials/carrito.hbs',
-    {
-        method: 'GET',
-        headers:{
-            'authorization': autorizacionAdminitrador,
-            'Content-Type': 'application/json'
-        }
+    const productosCarrito = await verCarrito(nuevoCarrito)
+    const carritoActual=productosCarrito.id
+    const carrito = await renderCarrito(productosCarrito.product)
+    contenedorPrincipal.innerHTML = carrito
+    let eliminarCarrito= document.querySelectorAll('.eliminar-carrito')
+    
+    eliminarCarrito.forEach(card=>{
+        card.addEventListener('click', async (e)=>{
+            e.preventDefault()
+            console.log(eliminarCarrito);
+            let idProducto = card.parentElement.parentElement.querySelector('#idProducto').innerText
+            const productosActualizados = await borrarProductCarrito(carritoActual, idProducto)
+            card.parentElement.parentElement.remove()
+            // const carrito = await renderCarrito(productosActualizados.product)
+            // contenedorPrincipal.innerHTML = carrito  
+            // eliminarCarrito = document.querySelectorAll('.eliminar-carrito')
+            // console.log(eliminarCarrito);
+            })
     })
-    .then(resp =>resp.text())
-    .then(form =>{
-        const template = Handlebars.compile(form)
-        const htmlCarrito = template ()
-        console.log(htmlCarrito);
-        contenedorPrincipal.innerHTML = htmlCarrito
-    })
+
 })
 
 compraProducto.forEach(card=>{
     card.addEventListener('click', async (e)=>{
         e.preventDefault()
         let idProducto = card.parentElement.parentElement.querySelector('#idProducto').innerText
-        if(!nuevoCarrito){
-            console.log("se ingresa aca");
-            nuevoCarrito = await nuevoCarritoid();
-            console.log(nuevoCarrito);
-            await agregarProdAlCarrito(nuevoCarrito, idProducto)
+        if(nuevoCarrito == null || nuevoCarrito == undefined){
+            nuevoCarrito = await nuevoCarritoid().then(response => response);
+            await agregarProdAlCarrito(nuevoCarrito.nuevoid, idProducto)
         } else{
-            await agregarProdAlCarrito(nuevoCarrito, idProducto)
+            await agregarProdAlCarrito(nuevoCarrito.nuevoid, idProducto)
         }
     })
 })
@@ -104,8 +108,7 @@ function cargaDeProductos() {
 
 function paginaBuscarProducto() {
     fetch('../views/partials/buscarProducto.hbs',
-    {
-        method: 'GET',
+    {   method: 'GET',
         headers:{
             'authorization': autorizacionAdminitrador,
             'Content-Type': 'application/json'
@@ -169,11 +172,29 @@ function paginaDeleteProductos(){
     .then(()=>{deleteProduct()})
     
 }
+
+async function renderCarrito(products){
+
+    return fetch('../views/partials/carrito.hbs',
+    {
+        method: 'GET',
+        headers:{
+            'authorization': autorizacionAdminitrador,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(resp =>resp.text())
+    .then(tabla =>{
+        const template = Handlebars.compile(tabla)
+
+        const htmlCarrito = template ({productos: products})
+        return htmlCarrito
+    })
+}
 /* -------------------------------- acciones productos -------------------------------- */
 
 let enviarProducto = ()=> {
     const newProduct = document.querySelector('#newProduct')
-    console.log(newProduct);
     newProduct.addEventListener('submit', event =>{
         event.preventDefault()
         const product = {
@@ -182,7 +203,8 @@ let enviarProducto = ()=> {
             codigo: codigo.value,
             foto: foto.value,
             precio: precio.value,
-            stock: stock.value
+            stock: stock.value,
+            timestamp: new Date().toLocaleString()
         }
 
         const url = './productos'
@@ -197,7 +219,9 @@ let enviarProducto = ()=> {
         fetch(url,configuraciones )
         .then(resp => resp.json())
         .then(data=>{
-            console.log(data);
+            if(data.error){
+                mostrarError(data.descripcion)
+            };
         })
         newProduct.reset()
     })
@@ -205,9 +229,11 @@ let enviarProducto = ()=> {
 
 let searchProduct= ()=>{
     const formSearchProduct=document.querySelector('#searchProduct')
-    console.log(formSearchProduct);
+    
     formSearchProduct.addEventListener('submit', event =>{
         event.preventDefault()
+        const id = document.querySelector('#id')
+
         const url = `./productos/${id.value}`
         const configuraciones = {
             method: 'GET',
@@ -245,7 +271,6 @@ let searchProduct= ()=>{
 
 let modifProducto= ()=>{
     const modifProduct=document.querySelector('#modifProduct')
-    console.log(modifProduct);
     modifProduct.addEventListener('submit', event =>{
         event.preventDefault()
         const url = `./productos/${id.value}`
@@ -255,7 +280,8 @@ let modifProducto= ()=>{
             codigo: codigo.value,
             foto: foto.value,
             precio: precio.value,
-            stock: stock.value
+            stock: stock.value,
+            timestamp: new Date().toLocaleString()
         }
         const configuraciones = {
             method: 'PUT',
@@ -348,20 +374,13 @@ let derivarPaginaAdministrador = () =>{
 /* --------------------------- acciones de carrito -------------------------- */
 
 async function nuevoCarritoid(){
-    const url = '/api/carrito'
+    const url = '/api/carrito/'
+    const cabezera = new Headers
     const configuraciones = {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        headers: cabezera
     }
-    const response = await fetch(url, configuraciones)
-    .then(resp => 
-        console.log(resp.json()))
-    .then(data=> {
-        console.log(data)})
-    
-    return response
+    return fetch(url, configuraciones).then(resp => resp.json())
 }
 
 async function agregarProdAlCarrito(nuevoCarrito, idProducto){
@@ -375,30 +394,50 @@ async function agregarProdAlCarrito(nuevoCarrito, idProducto){
             'Content-Type': 'application/json',
         }
     }
-    fetch(urlProducto, configuracionesProducto )
+    return fetch(urlProducto, configuracionesProducto )
     .then(response => response.json())
     .then(data=>{
-        console.log(data);
         let configuracionCarrito
         return configuracionCarrito = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data, null, " ")
+            body: JSON.stringify([data], null, " ")
         }})
     .then(produc=>{
-        console.log(urlCarrito);
+            produc
             fetch(urlCarrito, produc)
-                .then(resp => resp.json())
-                .then(data=>{
-                    console.log(data);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: data.msg,  
-    })})})
+            .then(resp => resp.json())
+            .then(data=> data)
+        })
 }
 
+async function verCarrito(nuevoCarrito){
+
+    const urlCarrito = `./carrito/${nuevoCarrito.nuevoid}/productos/`
+    const configuracionesProducto = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }
+    return fetch(urlCarrito, configuracionesProducto )
+    .then(response => response.json())
+    .then(data=> data)
+    }
+
+async function borrarProductCarrito(idCarrito, idProduct){
+    const url = `./carrito/${idCarrito}/productos/${idProduct}`
+        const configuraciones = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }
+        return fetch(url,configuraciones )
+        .then(resp => resp.json())
+        .then(data=>data)
+        }
 
 })
