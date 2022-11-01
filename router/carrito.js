@@ -1,5 +1,5 @@
 import Express  from "express";
-import { Carrito } from "../src/module/carrito.js";
+import { Carrito } from "../src/module/Carrito.js";
 
 
 /* ------------------------ configuracion del router ------------------------ */
